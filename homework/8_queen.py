@@ -50,6 +50,7 @@ def hill_climbing(queens, mode = 0):
             current = best
     return current, state
 
+
 # hill climbing with random restart
 def hill_climbing_restart(queens):
     pairs, pos = hill_climbing(queens, 1)
@@ -58,6 +59,8 @@ def hill_climbing_restart(queens):
         pairs, pos = hill_climbing(queens, 1)
     return pairs, pos
 
+
+# this is an algorithm that searches randomly, but it can reach almost all optimal solutions
 def mysterious(queens):
     current = collision(queens)
     state = queens.copy()
@@ -79,12 +82,42 @@ def mysterious(queens):
             state = tmp
     return current, state
 
+
+# simulated annealing algorithm
+def simulated_annealing(queens):
+    current = collision(queens)
+    state = queens.copy()
+    T = 5                 #initial temperature
+    while True:
+        if T < 0.001: 
+            break
+        a = random.randint(0, 7)
+        b = random.randint(0, 7)
+        while a == b:
+            b = random.randint(0, 7)
+        # print(a, b)
+        tmp = state.copy()
+        tmp[a], tmp[b] = tmp[b], tmp[a]
+        new_h = collision(tmp)
+        if new_h < current:
+            current = new_h
+            state = tmp
+        else:
+            r = random.random()
+            if r < np.exp((current - new_h) / T):
+                current = new_h
+                state = tmp                
+        T *= 0.99
+    return current, state
+
+
 count = 0
 for i in range(1000):
     queens = initialization()
     # pairs, pos = hill_climbing(queens, 1)
     # pairs, pos = mysterious(queens)
-    pairs, pos = hill_climbing_restart(queens)
+    # pairs, pos = hill_climbing_restart(queens)
+    pairs, pos = simulated_annealing(queens)
     if pairs == 0:
         count += 1
 print(count, '/ 1000')
