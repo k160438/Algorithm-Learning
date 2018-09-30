@@ -21,7 +21,7 @@ class Node(object):
 
 # Generator for TSP, it returns a vertices set and an adjacent matrix
 def TSPGenerator(n):
-    vertices = np.random.randint(0, 50, size = (n, 2))
+    vertices = np.random.random(size = (n, 2))
     edges = np.zeros((n, n))
     for i in range(n):
         for j in range(i + 1, n):

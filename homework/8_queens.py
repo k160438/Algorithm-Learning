@@ -114,10 +114,10 @@ def simulated_annealing(queens):
 count = 0
 for i in range(1000):
     queens = initialization()
-    # pairs, pos = hill_climbing(queens, 1)
+    pairs, pos = hill_climbing(queens, 0)
     # pairs, pos = mysterious(queens)
     # pairs, pos = hill_climbing_restart(queens)
-    pairs, pos = simulated_annealing(queens)
+    # pairs, pos = simulated_annealing(queens)
     if pairs == 0:
         count += 1
 print(count, '/ 1000')

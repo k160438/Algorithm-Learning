@@ -82,6 +82,8 @@ def GeneticAlgorithm(n, p, maxiter, edges):
         best_cost, best_path = selectBestIndiv(population, edges)
         # print(i, best_cost, best_path)
         population = selectParent(population, edges)
+
+        # reproduction with 5%
         for j in range(int(p * 0.05)):
             population.append(best_path) 
         random.shuffle(population)
